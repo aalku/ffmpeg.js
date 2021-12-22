@@ -7,8 +7,9 @@ This library provides FFmpeg builds ported to JavaScript using [Emscripten proje
 ### Decoders
 
 > hevc vp8 vp9 h264  
-> vorbis opus mp3 aac pcm_s16le pcm_s24le pcm_s32le pcm_s64le flac  
 > jpeg png webp  
+> vorbis opus mp3 aac flac  
+> pcm_s16le pcm_s24le pcm_s32le pcm_s64le  
 
 ### Encoders
 
@@ -29,10 +30,10 @@ See documentation on [Module object](https://emscripten.org/docs/api_reference/m
 
 ### Sync run
 
-ffmpeg.js provides common module API, `ffmpeg-webm.js` is the default module.
+FFmpeg4JS provides common module API, `ffmpeg-webm.js` is the default module.
 
 ```js
-const ffmpeg = require("ffmpeg.js");
+const ffmpeg = require("ffmpeg4js");
 let stdout = "";
 let stderr = "";
 // Print FFmpeg's version.
@@ -50,14 +51,16 @@ ffmpeg({
 
 ### Files
 
-Empscripten supports several types of [file systems](https://emscripten.org/docs/api_reference/Filesystem-API.html#file-systems). ffmpeg.js uses [MEMFS](https://emscripten.org/docs/api_reference/Filesystem-API.html#memfs) to store the input/output files in FFmpeg's working directory. You need to pass *Array* of *Object* to `MEMFS` option with the following keys:
+Empscripten supports several types of [file systems](https://emscripten.org/docs/api_reference/Filesystem-API.html#file-systems).  
+FFmpeg4JS uses [MEMFS](https://emscripten.org/docs/api_reference/Filesystem-API.html#memfs) to store the input/output files in FFmpeg's working directory.  
+You need to pass *Array* of *Object* to `MEMFS` option with the following keys:
 * **name** *(String)* - File name, can't contain slashes.
 * **data** *(ArrayBuffer/ArrayBufferView/Array)* - File data.
 
-ffmpeg.js resulting object has `MEMFS` option with the same structure and contains files which weren't passed to the input, i.e. new files created by FFmpeg.
+FFmpeg4JS resulting object has `MEMFS` option with the same structure and contains files which weren't passed to the input, i.e. new files created by FFmpeg.
 
 ```js
-const ffmpeg = require("ffmpeg.js");
+const ffmpeg = require("ffmpeg4js");
 const fs = require("fs");
 const testData = new Uint8Array(fs.readFileSync("test.webm"));
 // Encode test video to VP8.
@@ -78,7 +81,7 @@ You can also mount other FS by passing *Array* of *Object* to `mounts` option wi
 See documentation of [FS.mount](https://emscripten.org/docs/api_reference/Filesystem-API.html#FS.mount) for more details.
 
 ```js
-const ffmpeg = require("ffmpeg.js");
+const ffmpeg = require("ffmpeg4js");
 ffmpeg({
   // Mount /data inside application to the current directory.
   mounts: [{type: "NODEFS", opts: {root: "."}, mountpoint: "/data"}],
