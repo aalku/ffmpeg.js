@@ -22,7 +22,7 @@ FFmpeg4JS uses the following version pattern: `major.minor.ddd`, where:
 * **minor** - FFmpeg's minor version.
 * **ddd** - FFmpeg4JS own patch version. Should not be confused with FFmpeg's patch version number.
 
-Example: `4.4.7`
+Example: `4.4.12`
 
 ## Usage
 
@@ -44,27 +44,60 @@ You can send the following messages to the worker:
 * `{type: "run", ...opts}` - Start new job with provided options.
 
 ```js
-const worker = new Worker("ffmpeg.js");
-worker.onmessage = function(e) {
-  const msg = e.data;
-  switch (msg.type) {
-  case "ready":
-    worker.postMessage({type: "run", arguments: ["-version"]});
-    break;
-  case "stdout":
-    console.log(msg.data);
-    break;
-  case "stderr":
-    console.log(msg.data);
-    break;
-  case "done":
-    console.log(msg.data);
-    break;
-  }
-};
+export default function ExeFFAsync(from: string, ext: string, args: string[], buffer: Uint8Array): Promise<Uint8Array> {
+  return new Promise((resolve, reject) => {
+    const w = new Worker(new URL('ffmpeg4js', import.meta.url));
+    w.onmessage = function (e) {
+      const data = e.data;
+      const msg = data.data;
+      switch (data.type) {
+        case "ready":
+          w.postMessage({ type: "run", MEMFS: [{ name: from, data: buffer }], arguments: args });
+          break;
+        case "run":
+          break;
+        case "stdout":
+        case "stderr":
+          console.info(msg);
+          break;
+        case "abort":
+        case "error":
+          console.warn(msg);
+          break;
+        case "exit":
+          console.info(msg);
+          break;
+        case "done":
+          const out = msg.MEMFS.find(x => x.name === `${from}.${ext}`);
+          if (!out) 
+            return reject(`${from}.${ext}`);
+
+          resolve(out.data);
+          break;
+      }
+    };
+  })
+}
 ```
 
-You can use [worker_threads](https://nodejs.org/api/worker_threads.html) module in case of Node.
+### Sync run
+
+```js
+const ffmpeg = require("ffmpeg.js");
+let stdout = "";
+let stderr = "";
+// Print FFmpeg's version.
+ffmpeg({
+  arguments: ["-version"],
+  print: function(data) { stdout += data + "\n"; },
+  printErr: function(data) { stderr += data + "\n"; },
+  onExit: function(code) {
+    console.log("Process exited with code " + code);
+    console.log(stdout);
+    console.log(stderr);
+  },
+});
+```
 
 ### Files
 
