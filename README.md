@@ -17,12 +17,12 @@ This library provides FFmpeg builds ported to JavaScript using [Emscripten proje
 
 ## Version scheme
 
-FFmpeg4JS uses the following version pattern: `major.minor.9ddd`, where:
+FFmpeg4JS uses the following version pattern: `major.minor.ddd`, where:
 * **major** - FFmpeg's major version number used in the builds.
 * **minor** - FFmpeg's minor version.
 * **ddd** - FFmpeg4JS own patch version. Should not be confused with FFmpeg's patch version number.
 
-Example: `4.4.1004`
+Example: `4.4.7`
 
 ## Usage
 

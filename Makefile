@@ -19,7 +19,7 @@ WEBM_SHARED_DEPS = \
 	build/libvpx/dist/lib/libvpx.so
 
 all: webm
-webm: ffmpeg-webm.js ffmpeg-worker-webm.js
+webm: ffmpeg-webm.js
 
 clean: clean-js \
 	clean-opus clean-libvpx clean-ffmpeg-webm
@@ -160,7 +160,7 @@ ffmpeg-webm.js: $(FFMPEG_WEBM_BC) $(PRE_JS) $(POST_JS_SYNC)
 		--post-js $(POST_JS_SYNC) \
 		$(EMCC_COMMON_ARGS)
 
-ffmpeg-worker-webm.js: $(FFMPEG_WEBM_BC) $(PRE_JS) $(POST_JS_WORKER)
-	emcc $(FFMPEG_WEBM_BC) $(WEBM_SHARED_DEPS) \
-		--post-js $(POST_JS_WORKER) \
-		$(EMCC_COMMON_ARGS)
+# ffmpeg-worker-webm.js: $(FFMPEG_WEBM_BC) $(PRE_JS) $(POST_JS_WORKER)
+# 	emcc $(FFMPEG_WEBM_BC) $(WEBM_SHARED_DEPS) \
+# 		--post-js $(POST_JS_WORKER) \
+# 		$(EMCC_COMMON_ARGS)
