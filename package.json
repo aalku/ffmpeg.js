@@ -1,10 +1,10 @@
 {
   "name": "ffmpeg4js",
-  "version": "4.4.1004",
+  "version": "4.4.1005",
   "description": "Port of FFmpeg with Emscripten",
   "main": "ffmpeg-webm.js",
   "scripts": {},
-  "types": "types/index.d.ts",
+  "types": "index.d.ts",
   "files": [
     "*.js",
     "types/*.d.ts"

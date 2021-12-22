@@ -1,4 +1,4 @@
-# FFmpeg4JS
+# [FFmpeg4JS](https://www.npmjs.com/package/ffmpeg4js)
 
 This library provides FFmpeg builds ported to JavaScript using [Emscripten project](https://github.com/emscripten-core/emscripten). Builds are optimized for in-browser use: minimal size for faster loading, asm.js, performance tunings, etc. Though they work in Node as well.
 
