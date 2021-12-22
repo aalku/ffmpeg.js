@@ -1,14 +1,17 @@
 {
-  "name": "ffmpeg.js",
-  "version": "4.2.9003",
+  "name": "ffmpeg4js",
+  "version": "4.4.1004",
   "description": "Port of FFmpeg with Emscripten",
   "main": "ffmpeg-webm.js",
-  "scripts": {
-    "test": "mocha test/test.js"
-  },
+  "scripts": {},
+  "types": "types/index.d.ts",
+  "files": [
+    "*.js",
+    "types/*.d.ts"
+  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Kagami/ffmpeg.js.git"
+    "url": "git+https://github.com/Aloento/FFmpeg4JS.git"
   },
   "keywords": [
     "asm.js",
@@ -16,15 +19,11 @@
     "ffmpeg",
     "video"
   ],
-  "author": "Kagami Hiiragi",
+  "author": "Aloento & Kagami Hiiragi",
   "license": "(LGPL-2.1+ OR GPL-2.0)",
-  "ethereum": "0x3ec9a73ba55a22f020226be8b4496304d12be0e1",
   "bugs": {
-    "url": "https://github.com/Kagami/ffmpeg.js/issues"
+    "url": "https://github.com/Aloento/FFmpeg4JS/issues"
   },
-  "homepage": "https://github.com/Kagami/ffmpeg.js#readme",
-  "devDependencies": {
-    "chai": "latest",
-    "mocha": "latest"
-  }
+  "homepage": "https://github.com/Aloento/FFmpeg4JS#readme",
+  "devDependencies": {}
 }
