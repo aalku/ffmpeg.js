@@ -1,7 +1,3 @@
-# Compile FFmpeg and all its dependencies to JavaScript.
-# You need emsdk environment installed and activated, see:
-# <https://kripken.github.io/emscripten-site/docs/getting_started/downloads.html>.
-
 PRE_JS = build/pre.js
 POST_JS_SYNC = build/post-sync.js
 POST_JS_WORKER = build/post-worker.js
@@ -76,15 +72,6 @@ build/libvpx/dist/lib/libvpx.so:
 	emmake make -j && \
 	emmake make install
 
-# TODO(Kagami): Emscripten documentation recommends to always use shared
-# libraries but it's not possible in case of ffmpeg because it has
-# multiple declarations of `ff_log2_tab` symbol. GCC builds FFmpeg fine
-# though because it uses version scripts and so `ff_log2_tag` symbols
-# are not exported to the shared libraries. Seems like `emcc` ignores
-# them. We need to file bugreport to upstream. See also:
-# - <https://kripken.github.io/emscripten-site/docs/compiling/Building-Projects.html>
-# - <https://github.com/kripken/emscripten/issues/831>
-# - <https://ffmpeg.org/pipermail/libav-user/2013-February/003698.html>
 FFMPEG_COMMON_ARGS = \
 	--cc=emcc \
 	--ranlib=emranlib \
@@ -142,7 +129,7 @@ build/ffmpeg-webm/ffmpeg.bc: $(WEBM_SHARED_DEPS)
 	emmake make -j EXESUF=.bc
 
 EMCC_COMMON_ARGS = \
-	-Oz \
+	-O3 \
 	--closure 1 \
 	--memory-init-file 0 \
 	-s WASM=0 \
