@@ -28,26 +28,43 @@ Example: `4.4.7`
 
 See documentation on [Module object](https://emscripten.org/docs/api_reference/module.html#affecting-execution) for the list of options that you can pass.
 
-### Sync run
+### Via Web Worker
 
-FFmpeg4JS provides common module API, `ffmpeg-webm.js` is the default module.
+ffmpeg.js also provides wrapper for main function with Web Worker interface to offload the work to a different process. Worker sends the following messages:
+* `{type: "ready"}` - Worker loaded and ready to accept commands.
+* `{type: "run"}` - Worker started the job.
+* `{type: "stdout", data: "<line>"}` - FFmpeg printed to stdout.
+* `{type: "stderr", data: "<line>"}` - FFmpeg printed to stderr.
+* `{type: "exit", data: "<code>"}` - FFmpeg exited.
+* `{type: "done", data: "<result>"}` - Job finished with some result.
+* `{type: "error", data: "<error description>"}` - Error occurred.
+* `{type: "abort", data: "<abort reason>"}` - FFmpeg terminated abnormally (e.g. out of memory, wasm error).
+
+You can send the following messages to the worker:
+* `{type: "run", ...opts}` - Start new job with provided options.
 
 ```js
-const ffmpeg = require("ffmpeg4js");
-let stdout = "";
-let stderr = "";
-// Print FFmpeg's version.
-ffmpeg({
-  arguments: ["-version"],
-  print: function(data) { stdout += data + "\n"; },
-  printErr: function(data) { stderr += data + "\n"; },
-  onExit: function(code) {
-    console.log("Process exited with code " + code);
-    console.log(stdout);
-    console.log(stderr);
-  },
-});
+const worker = new Worker("ffmpeg.js");
+worker.onmessage = function(e) {
+  const msg = e.data;
+  switch (msg.type) {
+  case "ready":
+    worker.postMessage({type: "run", arguments: ["-version"]});
+    break;
+  case "stdout":
+    console.log(msg.data);
+    break;
+  case "stderr":
+    console.log(msg.data);
+    break;
+  case "done":
+    console.log(msg.data);
+    break;
+  }
+};
 ```
+
+You can use [worker_threads](https://nodejs.org/api/worker_threads.html) module in case of Node.
 
 ### Files
 

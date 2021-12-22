@@ -15,7 +15,7 @@ WEBM_SHARED_DEPS = \
 	build/opus/dist/lib/libopus.so \
 	build/libvpx/dist/lib/libvpx.so
 
-all: ffmpeg-webm.js
+all: ffmpeg.js
 
 clean: clean-js \
 	clean-opus clean-libvpx clean-ffmpeg-webm
@@ -129,7 +129,7 @@ build/ffmpeg-webm/ffmpeg.bc: $(WEBM_SHARED_DEPS)
 	emmake make -j EXESUF=.bc
 
 EMCC_COMMON_ARGS = \
-	-O3 \
+	-Oz \
 	--closure 1 \
 	--memory-init-file 0 \
 	-s WASM=0 \
@@ -143,12 +143,12 @@ EMCC_COMMON_ARGS = \
 	--pre-js $(PRE_JS) \
 	-o $@
 
-ffmpeg-webm.js: $(FFMPEG_WEBM_BC) $(PRE_JS) $(POST_JS_SYNC)
-	emcc $(FFMPEG_WEBM_BC) $(WEBM_SHARED_DEPS) \
-		--post-js $(POST_JS_SYNC) \
-		$(EMCC_COMMON_ARGS)
-
-# ffmpeg-worker-webm.js: $(FFMPEG_WEBM_BC) $(PRE_JS) $(POST_JS_WORKER)
+# ffmpeg-webm.js: $(FFMPEG_WEBM_BC) $(PRE_JS) $(POST_JS_SYNC)
 # 	emcc $(FFMPEG_WEBM_BC) $(WEBM_SHARED_DEPS) \
-# 		--post-js $(POST_JS_WORKER) \
+# 		--post-js $(POST_JS_SYNC) \
 # 		$(EMCC_COMMON_ARGS)
+
+ffmpeg.js: $(FFMPEG_WEBM_BC) $(PRE_JS) $(POST_JS_WORKER)
+	emcc $(FFMPEG_WEBM_BC) $(WEBM_SHARED_DEPS) \
+		--post-js $(POST_JS_WORKER) \
+		$(EMCC_COMMON_ARGS)
