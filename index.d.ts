@@ -37,14 +37,28 @@ declare namespace ffmpeg {
     }
 
     namespace Worker {
+        interface Type {
+            "ready",
+            "run",
+            "stdout",
+            "stderr",
+            "abort",
+            "error",
+            "exit",
+            "done"
+        }
+
         interface Data {
-            type: string;
+            type: keyof Type;
             data: string;
         }
 
         interface PostMessageOptions {
             type: string;
             arguments: string[];
+            MEMFS?: Video[] | undefined;
+            mounts?: Mount[] | undefined;
+            TOTAL_MEMORY?: number | undefined;
         }
 
         interface OnMessageOptions {

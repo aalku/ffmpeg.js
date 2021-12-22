@@ -3,11 +3,6 @@
 
 var __ffmpegjs_running = false;
 
-// Shim for nodejs
-if (typeof self === "undefined") {
-  self = require("worker_threads")["parentPort"];
-}
-
 self.onmessage = function(e) {
   var msg = e.data;
   if (msg["type"] == "run") {
@@ -34,8 +29,7 @@ self.onmessage = function(e) {
       opts["onAbort"] = function(reason) {
         self.postMessage({"type": "abort", "data": reason});
       };
-      // TODO(Kagami): Should we wrap this function into try/catch in
-      // case of possible exception?
+
       var result = __ffmpegjs(opts);
       var transfer = result["MEMFS"].map(function(file) {
         return file["data"].buffer;
