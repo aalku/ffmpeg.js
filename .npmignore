@@ -1,5 +1,4 @@
 *
-!/COPYING.*
-!/LICENSE.*
-!/ffmpeg*.js
-!/types
+!/LICENSE
+!/*.js
+!/*.ts

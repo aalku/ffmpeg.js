@@ -1,5 +1,5 @@
-// Type definitions for package ffmpeg4js 4.4
-// Project: https://github.com/Aloento/ffmpeg.js.git
+// Type definitions for package FFmpeg4JS 4.4
+// Project: https://github.com/Aloento/FFmpeg4JS.git
 // Definitions by: Vladimir Grenaderov <https://github.com/VladimirGrenaderov>,
 //                 Max Boguslavskiy <https://github.com/maxbogus>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
