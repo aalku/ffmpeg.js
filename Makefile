@@ -18,8 +18,7 @@ WEBM_SHARED_DEPS = \
 	build/opus/dist/lib/libopus.so \
 	build/libvpx/dist/lib/libvpx.so
 
-all: webm
-webm: ffmpeg-webm.js
+all: ffmpeg-webm.js
 
 clean: clean-js \
 	clean-opus clean-libvpx clean-ffmpeg-webm
@@ -141,7 +140,7 @@ build/ffmpeg-webm/ffmpeg.bc: $(WEBM_SHARED_DEPS)
 	emmake make -j EXESUF=.bc
 
 EMCC_COMMON_ARGS = \
-	-O3 \
+	-Oz \
 	--closure 1 \
 	--memory-init-file 0 \
 	-s WASM=0 \
@@ -150,7 +149,7 @@ EMCC_COMMON_ARGS = \
 	-s EXIT_RUNTIME=1 \
 	-s NODEJS_CATCH_EXIT=0 \
 	-s NODEJS_CATCH_REJECTION=0 \
-	-s TOTAL_MEMORY=67108864 \
+	-s ALLOW_MEMORY_GROWTH=1 \
 	-lnodefs.js -lworkerfs.js \
 	--pre-js $(PRE_JS) \
 	-o $@
