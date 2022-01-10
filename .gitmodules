@@ -6,7 +6,7 @@
 	path = build/opus
 	url = https://github.com/xiph/opus.git
 	ignore = dirty
-[submodule "build/ffmpeg-webm"]
-	path = build/ffmpeg-webm
+[submodule "build/ffmpeg-next"]
+	path = build/ffmpeg-next
 	url = https://git.ffmpeg.org/ffmpeg.git
 	ignore = dirty

@@ -1,3 +1,4 @@
+// {
   return __ffmpegjs_return;
 }
 

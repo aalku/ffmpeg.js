@@ -7,10 +7,10 @@ COMMON_FILTERS = aresample scale crop overlay hstack vstack
 COMMON_DEMUXERS = matroska ogg mov mp3 wav image2 concat
 COMMON_DECODERS = hevc vp8 vp9 h264 vorbis opus mp3 aac pcm_s16le pcm_s24le pcm_s32le pcm_s64le flac jpeg png webp
 
-WEBM_MUXERS = webm ogg null
-WEBM_ENCODERS = libvpx_vp9 libopus vorbis
-FFMPEG_WEBM_BC = build/ffmpeg-webm/ffmpeg.bc
-FFMPEG_WEBM_PC_PATH = ../opus/dist/lib/pkgconfig
+NEXT_MUXERS = webm ogg null
+NEXT_ENCODERS = libvpx_vp9 libopus vorbis
+FFMPEG_NEXT_BC = build/ffmpeg-next/ffmpeg.bc
+FFMPEG_NEXT_PC_PATH = ../opus/dist/lib/pkgconfig
 WEBM_SHARED_DEPS = \
 	build/opus/dist/lib/libopus.so \
 	build/libvpx/dist/lib/libvpx.so
@@ -18,15 +18,15 @@ WEBM_SHARED_DEPS = \
 all: ffmpeg.js
 
 clean: clean-js \
-	clean-opus clean-libvpx clean-ffmpeg-webm
+	clean-opus clean-libvpx clean-ffmpeg-next
 clean-js:
 	rm -f ffmpeg*.js
 clean-opus:
 	cd build/opus && git clean -xdf
 clean-libvpx:
 	cd build/libvpx && git clean -xdf
-clean-ffmpeg-webm:
-	cd build/ffmpeg-webm && git clean -xdf
+clean-ffmpeg-next:
+	cd build/ffmpeg-next && git clean -xdf
 
 build/opus/configure:
 	cd build/opus && ./autogen.sh
@@ -114,12 +114,12 @@ FFMPEG_COMMON_ARGS = \
 	--disable-xlib \
 	--enable-zlib
 
-build/ffmpeg-webm/ffmpeg.bc: $(WEBM_SHARED_DEPS)
-	cd build/ffmpeg-webm && \
-	EM_PKG_CONFIG_PATH=$(FFMPEG_WEBM_PC_PATH) emconfigure ./configure \
+build/ffmpeg-next/ffmpeg.bc: $(WEBM_SHARED_DEPS)
+	cd build/ffmpeg-next && \
+	EM_PKG_CONFIG_PATH=$(FFMPEG_NEXT_PC_PATH) emconfigure ./configure \
 		$(FFMPEG_COMMON_ARGS) \
-		$(addprefix --enable-encoder=,$(WEBM_ENCODERS)) \
-		$(addprefix --enable-muxer=,$(WEBM_MUXERS)) \
+		$(addprefix --enable-encoder=,$(NEXT_ENCODERS)) \
+		$(addprefix --enable-muxer=,$(NEXT_MUXERS)) \
 		--enable-gpl \
 		--enable-libopus \
 		--enable-libvpx \
@@ -143,12 +143,12 @@ EMCC_COMMON_ARGS = \
 	--pre-js $(PRE_JS) \
 	-o $@
 
-# ffmpeg-webm.js: $(FFMPEG_WEBM_BC) $(PRE_JS) $(POST_JS_SYNC)
-# 	emcc $(FFMPEG_WEBM_BC) $(WEBM_SHARED_DEPS) \
+# ffmpeg-sync.js: $(FFMPEG_NEXT_BC) $(PRE_JS) $(POST_JS_SYNC)
+# 	emcc $(FFMPEG_NEXT_BC) $(WEBM_SHARED_DEPS) \
 # 		--post-js $(POST_JS_SYNC) \
 # 		$(EMCC_COMMON_ARGS)
 
-ffmpeg.js: $(FFMPEG_WEBM_BC) $(PRE_JS) $(POST_JS_WORKER)
-	emcc $(FFMPEG_WEBM_BC) $(WEBM_SHARED_DEPS) \
+ffmpeg.js: $(FFMPEG_NEXT_BC) $(PRE_JS) $(POST_JS_WORKER)
+	emcc $(FFMPEG_NEXT_BC) $(WEBM_SHARED_DEPS) \
 		--post-js $(POST_JS_WORKER) \
 		$(EMCC_COMMON_ARGS)
