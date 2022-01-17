@@ -37,7 +37,7 @@ FFmpeg4JS uses the following version pattern: `major.minor.ddd`, where:
 - **minor** - FFmpeg's minor version.
 - **ddd** - FFmpeg4JS patch version.
 
-Current `4.4.13`
+Current `5.0.14`
 
 ## Usage
 

@@ -1,6 +1,6 @@
 {
   "name": "ffmpeg4js",
-  "version": "4.4.13",
+  "version": "5.0.14",
   "description": "Port of FFmpeg with Emscripten",
   "main": "ffmpeg.js",
   "scripts": {},
