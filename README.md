@@ -1,4 +1,6 @@
-# [FFmpeg4JS](https://www.npmjs.com/package/ffmpeg4js)
+# FFmpeg4JS
+
+This is a mix from https://github.com/Aloento/FFmpeg4JS and https://github.com/Kagami/ffmpeg.js
 
 This library provides FFmpeg builds ported to JavaScript using [Emscripten project](https://github.com/emscripten-core/emscripten). Builds are optimized for in-browser use: minimal size for faster loading, asm.js, performance tunings, etc. Though they work in Node as well.
 
@@ -195,7 +197,7 @@ git clone https://github.com/emscripten-core/emsdk.git && cd emsdk
 source emsdk_env.sh
 
 cd ~
-git clone --depth 1 https://github.com/Aloento/FFmpeg4JS --recurse-submodules && cd FFmpeg4JS
+git clone --depth 1 https://github.com/aalku/ffmpeg.js --recurse-submodules aalku-ffmpeg.js && cd aalku-ffmpeg.js
 make
 ```
 
