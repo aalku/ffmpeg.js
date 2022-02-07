@@ -10,3 +10,15 @@
 	path = build/ffmpeg-next
 	url = https://git.ffmpeg.org/ffmpeg.git
 	ignore = dirty
+[submodule "build/ffmpeg-mp4"]
+	path = build/ffmpeg-mp4
+	url = https://git.ffmpeg.org/ffmpeg.git
+	ignore = dirty
+[submodule "build/lame"]
+        path = build/lame
+        url = https://github.com/Kagami/lame-svn.git
+        ignore = dirty
+[submodule "build/x264"]
+        path = build/x264
+        url = https://code.videolan.org/videolan/x264.git
+        ignore = dirty
