@@ -3,7 +3,7 @@ POST_JS_SYNC = build/post-sync.js
 POST_JS_WORKER = build/post-worker.js
 
 COMMON_BSFS = vp9_superframe
-COMMON_FILTERS = aresample scale crop overlay hstack vstack
+COMMON_FILTERS = aresample scale crop overlay hstack vstack split fps flags palettegen paletteuse
 COMMON_DEMUXERS = matroska ogg mov mp3 wav image2 concat hls hls,applehttp mpegts
 COMMON_DECODERS = hevc vp8 vp9 h264 vorbis opus mp3 aac pcm_s16le pcm_s24le pcm_s32le pcm_s64le flac jpeg mjpeg png webp
 
@@ -15,8 +15,8 @@ WEBM_SHARED_DEPS = \
 	build/opus/dist/lib/libopus.so \
 	build/libvpx/dist/lib/libvpx.so
 
-MP4_MUXERS = mp4 mp3 null
-MP4_ENCODERS = libx264 libmp3lame aac
+MP4_MUXERS = mp4 mp3 null gif
+MP4_ENCODERS = libx264 libmp3lame aac gif
 FFMPEG_MP4_BC = build/ffmpeg-mp4/ffmpeg.bc
 FFMPEG_MP4_PC_PATH = ../x264/dist/lib/pkgconfig
 MP4_SHARED_DEPS = \
